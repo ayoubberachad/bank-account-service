@@ -24,6 +24,7 @@ public class AccountServiceImpl implements AccountService {
                 .createdate(new Date())
                 .type(bankAccountDTO.getType())
                 .currency(bankAccountDTO.getCurrency())
+                .balance(bankAccountDTO.getBalance())
                 .build();
         BankAccount saveBankAccount = bankAccountRepository.save(bankAccount);
         BankAccountResponseDTO bankAccountResponseDTO = BankAccountResponseDTO.builder()
@@ -34,5 +35,32 @@ public class AccountServiceImpl implements AccountService {
                 .balance(saveBankAccount.getBalance())
                 .build();
         return bankAccountResponseDTO;
+    }
+
+
+    @Override
+    public BankAccountResponseDTO updateAccount(String id, BankAccountRequestDTO bankAccountDTO) {
+        BankAccount bankAccount = BankAccount.builder()
+                .id(id)
+                .createdate(new Date())
+                .type(bankAccountDTO.getType())
+                .currency(bankAccountDTO.getCurrency())
+                .balance(bankAccountDTO.getBalance())
+                .build();
+        BankAccount saveBankAccount = bankAccountRepository.save(bankAccount);
+        BankAccountResponseDTO bankAccountResponseDTO = BankAccountResponseDTO.builder()
+                .id(saveBankAccount.getId())
+                .type(saveBankAccount.getType())
+                .createdate(saveBankAccount.getCreatedate())
+                .currency(saveBankAccount.getCurrency())
+                .balance(saveBankAccount.getBalance())
+                .build();
+        return bankAccountResponseDTO;
+    }
+
+    @Override
+    public Boolean deleteAccount(String id) {
+        bankAccountRepository.deleteById(id);
+        return true;
     }
 }
